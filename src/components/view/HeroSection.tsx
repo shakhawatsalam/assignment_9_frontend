@@ -13,13 +13,13 @@ import CountUp from "react-countup";
 
 const HeroSection = () => {
   return (
-    <div className='py-32 text-center xl:text-left '>
+    <div className='py-32 h-[80vh] text-center xl:text-left '>
       {/* avatar Img  */}
       <div className='invisible xl:visible absolute bottom-0 -left-[370px]'></div>
       <div className='container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6'>
         {/* text  */}
-        <div className='flex-1 flex flex-col justify-center'>
-          <h2 className='text-5xl font-semibold mb-10'>
+        <div className='flex-1 flex flex-col justify-center '>
+          <h2 className='text-5xl font-semibold mb-10 '>
             Captivating <span className='text-gray-500'>stories</span> birth
             magnificent design
           </h2>
