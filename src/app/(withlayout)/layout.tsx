@@ -11,7 +11,7 @@ export default function AdminLayout({
     <>
       <div className='flex'>
         <Sidebar />
-        <div className='border flex-[8] rounded h-[100vh] m-0 p-0'>
+        <div className='flex-[8] rounded m-0 p-0 h-full'>
           <AdminNavBar />
           {children}
         </div>

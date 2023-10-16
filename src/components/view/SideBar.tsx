@@ -12,7 +12,7 @@ export default function Sidebar() {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <aside className='h-screen'>
+    <aside className='h-screen border'>
       <nav className='h-full flex flex-col  shadow-sm'>
         <div className='p-4 pb-2 flex justify-between items-center'>
           {/* <Image

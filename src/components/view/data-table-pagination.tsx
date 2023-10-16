@@ -6,6 +6,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
+
 import {
   Select,
   SelectContent,
@@ -19,7 +20,9 @@ interface DataTablePaginationProps<TData> {
   table: Table<TData>;
 }
 
-export function Pagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({
+  table,
+}: DataTablePaginationProps<TData>) {
   return (
     <div className='flex items-center justify-between px-2'>
       <div className='flex-1 text-sm text-muted-foreground'>
