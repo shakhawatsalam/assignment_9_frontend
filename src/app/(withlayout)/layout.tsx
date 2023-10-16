@@ -1,6 +1,6 @@
 import AdminNavBar from "@/components/view/AdminNavBar";
-import NavBar from "@/components/view/NavBar";
 import Sidebar from "@/components/view/SideBar";
+import Providers from "@/lib/Providers";
 
 export default function AdminLayout({
   children,
@@ -9,13 +9,15 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <div className='flex'>
-        <Sidebar />
-        <div className='flex-[8] rounded m-0 p-0 h-full'>
-          <AdminNavBar />
-          {children}
+      <Providers>
+        <div className='flex'>
+          <Sidebar />
+          <div className='flex-[8] rounded m-0 p-0 h-full'>
+            <AdminNavBar />
+            {children}
+          </div>
         </div>
-      </div>
+      </Providers>
     </>
   );
 }

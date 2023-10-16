@@ -11,7 +11,7 @@ import { StickerIcon } from "lucide-react";
 //   link: string;
 // }[];
 export function SidebarItem({ SideBarItems }: any) {
-  const [key, setKey] = useState(0);
+  const [key, setKey] = useState<Number>();
 
   const { expanded } = useContext(SidebarContext);
 

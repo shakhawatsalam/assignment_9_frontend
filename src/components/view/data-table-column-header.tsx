@@ -30,6 +30,7 @@ export function DataTableColumnHeader<TData, TValue>({
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;
   }
+  console.log(column.getIsSorted(), 'hello')
 
   return (
     <div className={cn("flex items-center space-x-2", className)}>

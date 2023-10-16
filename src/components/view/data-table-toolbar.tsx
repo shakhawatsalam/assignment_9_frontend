@@ -11,28 +11,42 @@ import { priorities, statuses } from "./data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Button } from "../ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
+import { useState } from "react";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  searchTerm: string;
+  setSearchTerm: (newValue: string) => void;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  searchTerm,
+  setSearchTerm,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 items-center space-x-2'>
-        <Input
+        {/* <Input
           placeholder='Filter tasks...'
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("firstName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event: any) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("firstName")?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
+        /> */}
+        <Input
+          className='h-8 w-[150px] lg:w-[250px]'
+          type='text'
+          placeholder='text'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {table.getColumn("status") && (
+        {/* {table.getColumn("status") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title='Status'
@@ -45,11 +59,14 @@ export function DataTableToolbar<TData>({
             title='Priority'
             options={priorities}
           />
-        )}
-        {isFiltered && (
+        )} */}
+        {searchTerm && (
           <Button
             variant='ghost'
-            onClick={() => table.resetColumnFilters()}
+            onClick={() => {
+              table.resetColumnFilters();
+              setSearchTerm("");
+            }}
             className='h-8 px-2 lg:px-3'>
             Reset
             <Cross2Icon className='ml-2 h-4 w-4' />

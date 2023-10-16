@@ -1,5 +1,4 @@
 import React from "react";
-import { MainNav } from "../ui/navBar";
 import { Avater } from "./Avater";
 import { ModeToggle } from "./ThemeToggleButton";
 

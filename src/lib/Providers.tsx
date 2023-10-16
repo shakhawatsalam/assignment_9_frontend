@@ -1,16 +1,22 @@
 "use client";
 
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ThemeProvider
-      attribute='class'
-      defaultTheme='system'
-      enableSystem
-      disableTransitionOnChange>
-      {children}
-    </ThemeProvider>
+    <>
+      <Provider store={store}>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
+      </Provider>
+    </>
   );
 };
 
