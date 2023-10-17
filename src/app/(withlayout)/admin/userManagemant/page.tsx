@@ -1,9 +1,11 @@
 "use client";
 import { DataTable } from "@/components/view/TableComponent";
-import { columns } from "@/components/view/Usercolumns";
+import Usercolumns from "@/components/view/Usercolumns";
 import { data } from "@/components/view/data/tasks";
 import { useGetAllUserQuery } from "@/redux/api/userApi";
+import { IQuery } from "@/redux/features/query/querySlice";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 // const Newdata = [
 //   {
@@ -100,24 +102,10 @@ import React, { useState } from "react";
 // ];
 
 const UserManagement = () => {
-  // * 🚀🚀🚀 Setting Query Data
-  const query: Record<string, any> = {};
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-
-  // console.log(query);
-
   // * 🚀🚀🚀 Getting All Data
   const { data, isLoading } = useGetAllUserQuery({});
   const mainData = data?.data || {};
+
   if (isLoading) {
     return (
       <div className='w-[100vw] h-[100vw] flex justify-center items-center'>
@@ -128,14 +116,7 @@ const UserManagement = () => {
   return (
     <div className='p-10'>
       <h1>This Is User Management Page</h1>
-      <DataTable
-        columns={columns}
-        data={mainData}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setLimit={setLimit}
-        setPage={setPage}
-      />
+      <DataTable columns={Usercolumns()} data={mainData} />
     </div>
   );
 };

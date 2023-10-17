@@ -5,18 +5,21 @@ const AUTH_URL = "/auth";
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllUser: build.query({
-      query: () => ({
+      query: (arg: Record<string, any>) => ({
         url: `/users`,
         method: "GET",
+        params: arg,
       }),
-      // transformResponse: (response) => {
-      //   return {
-      //     data: response,
-      //   };
-      // },
-      //   invalidatesTags: [tagTypes.user],
+      providesTags: [tagTypes.user],
+    }),
+    deleteUser: build.mutation({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
-export const { useGetAllUserQuery } = userApi;
+export const { useGetAllUserQuery, useDeleteUserMutation } = userApi;

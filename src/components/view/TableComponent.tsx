@@ -29,6 +29,8 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { useDispatch } from "react-redux";
+import { addLimit } from "@/redux/features/query/querySlice";
 // type TNewData = {
 //   id: string;
 //   firstName: string;
@@ -43,20 +45,13 @@ import { DataTableToolbar } from "./data-table-toolbar";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchTerm: string;
-  setSearchTerm: (newValue: string) => void;
-  setPage: (newValue: number) => void;
-  setLimit: (newValue: number) => void;
+
   // data: TNewData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchTerm,
-  setSearchTerm,
-  setPage,
-  setLimit,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -89,18 +84,9 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
-  
-  const limitAndPage = table.getState().pagination;
-  setLimit(limitAndPage.pageSize);
-  setPage(limitAndPage.pageIndex + 1);
-
   return (
     <div className='space-y-4'>
-      <DataTableToolbar
-        table={table}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
+      <DataTableToolbar table={table} />
       <div className='rounded-md border'>
         <Table>
           <TableHeader>
