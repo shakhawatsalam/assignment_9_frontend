@@ -22,12 +22,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-export type ServiceData = {
+type timeSlot = {
   id: string;
-  title: string;
-  price: number;
-  availability: string;
+  startTime: string;
+  createdAt: string;
+  updatedAt: string;
+};
+type bookingData = {
+  id: string;
+  user: UserData;
+  service: ServiceData;
+  bookingStatus: string;
+  slot: timeSlot;
 };
 
 import React, { useState } from "react";
@@ -37,50 +43,85 @@ import DeleteUserModel from "./DeleteUserModel";
 import EditUserModel from "./EditUserModel";
 import Link from "next/link";
 import DeleteServiceModal from "./DeleteServiceModal";
+import { UserData } from "./Usercolumns";
+import { ServiceData } from "./ServiceColumns";
 
-const Servicecolumns = (): ColumnDef<ServiceData>[] => {
-  const columns: ColumnDef<ServiceData>[] = [
+const BookingColumns = (): ColumnDef<bookingData>[] => {
+  const columns: ColumnDef<bookingData>[] = [
     // * This is Select Column End
     {
-      accessorKey: "title",
+      accessorKey: "id",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title='Title' />
+        <DataTableColumnHeader column={column} title='Booking Id' />
       ),
-      cell: ({ row }) => (
-        <div className='w-[80px]'>{row.getValue("title")}</div>
-      ),
+      cell: ({ row }) => <div className='w-[80px]'>{row.getValue("id")}</div>,
       enableSorting: false,
       enableHiding: false,
     },
     {
-      accessorKey: "price",
+      accessorKey: "bookingStatus",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title='Price' />
+        <DataTableColumnHeader column={column} title='bookingStatus' />
       ),
-      cell: ({ row }) => (
-        <div className='w-[80px]'>{row.getValue("price")}</div>
+        cell: ({ row }) => (
+          <div className='flex space-x-2 justify-center items-center'>
+            <span className='max-w-[500px] truncate font-medium'>
+             <Badge>{row.getValue("bookingStatus")}</Badge>{" "}
+            </span>
+         </div>
+       
       ),
     },
     {
-      accessorKey: "availability",
+      accessorKey: "user",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title='availability' />
+        <DataTableColumnHeader column={column} title='user name' />
       ),
       cell: ({ row }) => {
-        return (
-          <div className='flex space-x-2'>
-            <span className='max-w-[500px] truncate font-medium'>
-              <Badge>{row.getValue("availability")}</Badge>{" "}
-            </span>
-          </div>
-        );
+        const user: UserData = row.getValue("user");
+        return <div className='w-[80px]'>{user.firstName}</div>;
       },
-      enableSorting: false,
     },
+    {
+      accessorKey: "service",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title='Service' />
+      ),
+      cell: ({ row }) => {
+        const service: ServiceData = row.getValue("service");
+        return <div className='w-[80px]'>{service.title}</div>;
+      },
+    },
+    {
+      accessorKey: "slot",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title='slot' />
+      ),
+      cell: ({ row }) => {
+        const slot: timeSlot = row.getValue("slot");
+        return <div className='w-[80px]'>{slot.startTime}</div>;
+      },
+    },
+    // {
+    //   accessorKey: "availability",
+    //   header: ({ column }) => (
+    //     <DataTableColumnHeader column={column} title='availability' />
+    //   ),
+    //   cell: ({ row }) => {
+    //     return (
+    //       <div className='flex space-x-2'>
+    //         <span className='max-w-[500px] truncate font-medium'>
+    //           <Badge>{row.getValue("availability")}</Badge>{" "}
+    //         </span>
+    //       </div>
+    //     );
+    //   },
+    //   enableSorting: false,
+    // },
     {
       accessorKey: "createdAt",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title='Created At' />
+        <DataTableColumnHeader column={column} title='Booking Date' />
       ),
 
       cell: ({ row }) => {
@@ -136,7 +177,7 @@ const Servicecolumns = (): ColumnDef<ServiceData>[] => {
             <div>
               {/* <Dialog> */}
               {/* <DialogTrigger asChild onClick={() => setID(row.original.id)}> */}
-              <Link href={`/admin/serviceManagemant/edit/${row.original.id}`}>
+              <Link href={`/admin/bookingManageMent/edit/${row.original.id}`}>
                 <Button variant='outline'>Edit Service</Button>
               </Link>
               {/* </DialogTrigger> */}
@@ -184,4 +225,4 @@ const Servicecolumns = (): ColumnDef<ServiceData>[] => {
   return columns;
 };
 
-export default Servicecolumns;
+export default BookingColumns;

@@ -4,15 +4,24 @@ const AUTH_URL = "/auth";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    userLogin: build.mutation({
-      query: (loginData) => ({
-        url: `${AUTH_URL}/login`,
+    userRegister: build.mutation({
+      query: (registarData) => ({
+        url: `/auth/signup`,
         method: "POST",
-        data: loginData,
+        body: registarData.body,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
+    userLogin: build.mutation({
+      query: (data) => ({
+        url: `/auth/login`,
+        method: "POST",
+        body: data.body,
       }),
       invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
-export const { useUserLoginMutation } = authApi;
+export const { useUserRegisterMutation, useUserLoginMutation } = authApi;

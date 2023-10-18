@@ -1,6 +1,10 @@
+"use client";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { getUserInfo, isLoggedIn } from "@/service/auth.service";
+import { useSelector } from "react-redux";
+import { IAuth } from "@/redux/features/user/userSlice";
 
 export function MainNav({
   className,
@@ -13,22 +17,17 @@ export function MainNav({
       <Link
         href='/examples/dashboard'
         className='text-sm font-medium transition-colors hover:text-primary'>
-        Overview
+        About Us
       </Link>
       <Link
-        href='/examples/dashboard'
+        href='/register'
         className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'>
-        Customers
+        Register
       </Link>
       <Link
-        href='/examples/dashboard'
+        href='/login'
         className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'>
-        Products
-      </Link>
-      <Link
-        href='/examples/dashboard'
-        className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'>
-        Settings
+        Log In
       </Link>
     </nav>
   );

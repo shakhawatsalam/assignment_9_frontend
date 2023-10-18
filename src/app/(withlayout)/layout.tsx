@@ -9,15 +9,13 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <Providers>
-        <div className='flex'>
-          <Sidebar />
-          <div className='flex-[8] rounded m-0 p-0 h-full'>
-            <AdminNavBar />
-            {children}
-          </div>
+      <div className='flex'>
+        <Sidebar />
+        <div className='flex-[8] rounded m-0 p-0 h-full'>
+          <AdminNavBar />
+          {children}
         </div>
-      </Providers>
+      </div>
     </>
   );
 }

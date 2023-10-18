@@ -1,5 +1,6 @@
 "use client";
 import {
+  useAddServiceMutation,
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
@@ -22,11 +23,30 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 enum ServiceAvailabality {
   upcomming,
   available,
 }
+const formSchema = z.object({
+  title: z.string({
+    required_error: "title is Required.",
+  }),
+  description: z.string({
+    required_error: "description is Required.",
+  }),
+  image: z.string({
+    required_error: "title is Required.",
+  }),
+  price: z.string({
+    required_error: "title is Required.",
+  }),
+  availability: z.string({
+    required_error: "title is Required.",
+  }),
+});
 
 interface IFormInput {
   title: string;
@@ -36,30 +56,29 @@ interface IFormInput {
   availability: ServiceAvailabality;
 }
 
-const ServiceEditPage = ({ params }: { params: any }) => {
-  const { id } = params;
-  const form = useForm<IFormInput>();
-  const { reset } = form;
-  const { data, isLoading } = useGetSingleServiceQuery(id);
-  const [updateService] = useUpdateServiceMutation();
+const ServiceCreatePage = () => {
+  const form = useForm<IFormInput>({
+    resolver: zodResolver(formSchema),
+  });
 
-  const userData = data;
+  const { reset } = form;
+  const [addService] = useAddServiceMutation();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const numPrice = data.price;
     const updatedData = {
-      title: data.title || (userData?.data?.title ?? ""),
-      description: data.description || (userData?.data?.description ?? ""),
-      image: data.image || (userData?.data?.image ?? ""),
-      price: Number(numPrice) || (userData?.data?.price ?? ""),
-      availability: data.availability || (userData?.data?.availability ?? ""),
+      title: data.title,
+      description: data.description,
+      image: data.image,
+      price: Number(numPrice),
+      availability: data.availability,
     };
     try {
-      console.log(updatedData);
-      const update = await updateService({ id, body: updatedData });
-      if (!!update) {
-        console.log(!!update);
-        reset();
-      }
+      const addedData = await addService(updatedData);
+      console.log(addedData);
+      // if (!!addedData) {
+      //   console.log(!!addedData);
+      //   reset();
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -69,6 +88,10 @@ const ServiceEditPage = ({ params }: { params: any }) => {
       <div className='w-[500px] border p-11'>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <div className='flex flex-col gap-5'>
+              <h1 className='text-5xl'> Create Service</h1>
+              <FormDescription>Fill Up Ass fields</FormDescription>
+            </div>
             <FormField
               control={form.control}
               name='title'
@@ -76,7 +99,7 @@ const ServiceEditPage = ({ params }: { params: any }) => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder={data?.data?.title} {...field} />
+                    <Input placeholder='Title' {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -90,7 +113,7 @@ const ServiceEditPage = ({ params }: { params: any }) => {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder={data?.data?.description} {...field} />
+                    <Input placeholder='description' {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -105,7 +128,7 @@ const ServiceEditPage = ({ params }: { params: any }) => {
                 <FormItem>
                   <FormLabel>Image Link</FormLabel>
                   <FormControl>
-                    <Input placeholder={data?.data?.image} {...field} />
+                    <Input placeholder='image.link' {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -119,7 +142,7 @@ const ServiceEditPage = ({ params }: { params: any }) => {
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input placeholder={data?.data?.price} {...field} />
+                    <Input placeholder='Price' {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -160,4 +183,4 @@ const ServiceEditPage = ({ params }: { params: any }) => {
   );
 };
 
-export default ServiceEditPage;
+export default ServiceCreatePage;

@@ -3,7 +3,7 @@ import { DataTable } from "@/components/view/TableComponent";
 import Usercolumns from "@/components/view/Usercolumns";
 import { data } from "@/components/view/data/tasks";
 import { useGetAllUserQuery } from "@/redux/api/userApi";
-import { IQuery } from "@/redux/features/query/querySlice";
+import { IQuery } from "@/redux/features/user/userSlice";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 

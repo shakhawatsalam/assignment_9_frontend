@@ -17,7 +17,7 @@ import {
 import { Button } from "../ui/button";
 import { ReactNode } from "react";
 import { useDispatch } from "react-redux";
-import { addLimit } from "@/redux/features/query/querySlice";
+import { addLimit } from "@/redux/features/user/userSlice";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;

@@ -1,6 +1,6 @@
 import { baseApi } from "./api/baseApi";
-import queryReducer from "./features/query/querySlice";
+import userReducer from "./features/user/userSlice";
 export const reducer = {
-  query: queryReducer,
+  query: userReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 };

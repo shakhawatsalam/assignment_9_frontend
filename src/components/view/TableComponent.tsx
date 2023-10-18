@@ -30,13 +30,12 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useDispatch } from "react-redux";
-import { addLimit } from "@/redux/features/query/querySlice";
+import { addLimit } from "@/redux/features/user/userSlice";
 import { DataTableToolbarForService } from "./data-table-toolbar-service";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-
 }
 
 export function DataTable<TData, TValue>({
