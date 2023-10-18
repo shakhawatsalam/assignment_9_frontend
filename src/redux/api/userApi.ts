@@ -1,6 +1,5 @@
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
-const AUTH_URL = "/auth";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,6 +11,31 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    // get single user
+    getSingleUser: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
+    // update room
+    // updateUser: build.mutation({
+    //   query: (data) => ({
+    //     url: `/users/${data.id}`,
+    //     method: "PATCH",
+    //     data: data.body,
+    //   }),
+    //   invalidatesTags: [tagTypes.user],
+    // }),
+    updateUser: build.mutation({
+      query: (data) => ({
+        url: `/users/${data.id}`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     deleteUser: build.mutation({
       query: (id) => ({
         url: `/users/${id}`,
@@ -22,4 +46,9 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllUserQuery, useDeleteUserMutation } = userApi;
+export const {
+  useGetAllUserQuery,
+  useDeleteUserMutation,
+  useGetSingleUserQuery,
+  useUpdateUserMutation,
+} = userApi;

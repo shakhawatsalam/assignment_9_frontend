@@ -31,22 +31,12 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useDispatch } from "react-redux";
 import { addLimit } from "@/redux/features/query/querySlice";
-// type TNewData = {
-//   id: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   role: string;
-//   contactNo: string;
-//   address: string;
-//   profileImg: string;
-// };
+import { DataTableToolbarForService } from "./data-table-toolbar-service";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 
-  // data: TNewData[];
 }
 
 export function DataTable<TData, TValue>({
@@ -86,7 +76,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='space-y-4'>
-      <DataTableToolbar table={table} />
+      <DataTableToolbarForService table={table} />
       <div className='rounded-md border'>
         <Table>
           <TableHeader>

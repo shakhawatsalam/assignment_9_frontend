@@ -106,13 +106,6 @@ const UserManagement = () => {
   const { data, isLoading } = useGetAllUserQuery({});
   const mainData = data?.data || {};
 
-  if (isLoading) {
-    return (
-      <div className='w-[100vw] h-[100vw] flex justify-center items-center'>
-        <h1>Loading</h1>
-      </div>
-    );
-  }
   return (
     <div className='p-10'>
       <h1>This Is User Management Page</h1>

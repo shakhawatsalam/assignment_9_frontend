@@ -12,28 +12,20 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
-import { useDeleteUserMutation, useGetSingleUserQuery } from "@/redux/api/userApi";
+import { useDeleteServiceMutation } from "@/redux/api/serviceApi";
 
-const DeleteUserModel = ({ props }: { props: string }) => {
-  console.log(props, "delete");
-  const { data, isLoading } = useGetSingleUserQuery(props);
-  console.log(data, "hello delete");
-  // if (isLoading) {
-  //   return <div>loaing</div>
-  // }
-  const [deleteUser] = useDeleteUserMutation();
+const DeleteServiceModal = ({ props }: { props: string }) => {
+  const [deleteService] = useDeleteServiceMutation();
   return (
     <div>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='mb-14 flex justify-center items-center'>
-          <DialogTitle>Do You Want To Delete The User</DialogTitle>
-          <DialogDescription>
-            {data?.data?.firstName}
-          </DialogDescription>
+          <DialogTitle>Do You Want To Delete The Service</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <DialogClose asChild>
           <DialogFooter>
-            <Button onClick={() => deleteUser(props)} size={"icon"}>
+            <Button onClick={() => deleteService(props)} size={"icon"}>
               <Trash />
             </Button>
           </DialogFooter>
@@ -43,4 +35,4 @@ const DeleteUserModel = ({ props }: { props: string }) => {
   );
 };
 
-export default DeleteUserModel;
+export default DeleteServiceModal;
