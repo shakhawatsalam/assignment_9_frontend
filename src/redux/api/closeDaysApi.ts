@@ -20,9 +20,21 @@ export const dayApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.booking],
+      providesTags: [tagTypes.closedays],
+    }),
+    deleteCloseday: build.mutation({
+      query: (data) => ({
+        url: `/closedays`,
+        method: "DELETE",
+        body: data.body,
+      }),
+      invalidatesTags: [tagTypes.closedays],
     }),
   }),
 });
 
-export const { useAddCloseDaysMutation, useGetClosedaysQuery } = dayApi;
+export const {
+  useAddCloseDaysMutation,
+  useGetClosedaysQuery,
+  useDeleteClosedayMutation,
+} = dayApi;

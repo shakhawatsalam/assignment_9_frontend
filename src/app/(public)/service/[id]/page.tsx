@@ -24,8 +24,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ArrowLeftFromLine } from "lucide-react";
 // *  day's type
-type Day = {
+export type Day = {
   id: string;
   name: string; // monday, tuesday
   dayOfWeek: number;
@@ -39,7 +40,6 @@ interface CalendarProps {
 }
 
 const ServiceDeatilsPage = () => {
-  const [dialog, setDialog] = useState();
   const router = useRouter();
   const [addCloseDays] = useAddCloseDaysMutation();
   const { data, isLoading } = useAlldaysQuery({});
@@ -57,11 +57,10 @@ const ServiceDeatilsPage = () => {
     }
   }, [tooLate, addCloseDays]);
 
-  const [date, setDate] = useState<DateTime>({
+  const [date, setDate] = useState<DateTime | any>({
     justDate: null,
     dateTime: null,
   });
-  console.log(date.justDate);
 
   useEffect(() => {
     if (date.dateTime) {
@@ -84,15 +83,20 @@ const ServiceDeatilsPage = () => {
   // Function to check if a date is closed
   const isDateClosed = (date: any) => {
     const closedDays: any[] = [];
+
     const a = DatabaseclosedDays?.map((e: any) => {
       const dateObject = new Date(e.date);
       closedDays.push(dateObject);
     });
+
+    // console.log(closedDays)
     const isClosed = closedDays.some(
       (closedDate) => closedDate.toDateString() === date.toDateString()
     );
     return isClosed;
   };
+
+
   return (
     <div className='py-32 h-[80vh] text-center xl:text-left '>
       <Dialog>
@@ -113,30 +117,41 @@ const ServiceDeatilsPage = () => {
             {/* counters  */}
           </div>
           {/* info  */}
-          <div className='flex flex-col justify-center items-center w-full xl:max-w-[48%] '>
+          <div className='flex flex-col justify-center items-center w-full xl:max-w-[48%]  min-h-[400px] relative'>
             {" "}
             {date.justDate ? (
-              <div className='flex max-w-lg flex-wrap gap-4'>
-                {times?.map((time, i) => (
-                  <div className='rounded-sm  p-2' key={`time-${i}`}>
-                    <DialogTrigger>
-                      <Button
-                        onClick={() =>
-                          setDate((prev) => ({ ...prev, dateTime: time }))
-                        }
-                        type='button'>
-                        {format(time, "kk:mm")}
-                      </Button>
-                    </DialogTrigger>
-                  </div>
-                ))}
-              </div>
+              <>
+                <Button
+                  className='ml-[70%] absolute top-4'
+                  size={"icon"}
+                  onClick={() => setDate({ justDate: null })}>
+                  <ArrowLeftFromLine />
+                </Button>
+                <div className='grid grid-cols-4  max-w-lg  gap-3'>
+                  {times?.map((time: any, i: any) => (
+                    <div className='rounded-sm  p-2' key={`time-${i}`}>
+                      <DialogTrigger>
+                        <Button
+                          onClick={() =>
+                            setDate((prev: any) => ({
+                              ...prev,
+                              dateTime: time,
+                            }))
+                          }
+                          type='button'>
+                          {format(time, "kk:mm")}
+                        </Button>
+                      </DialogTrigger>
+                    </div>
+                  ))}
+                </div>
+              </>
             ) : (
               <Calendar
                 mode='single'
                 disabled={(date) => isDateClosed(date) || isDateInPast(date)}
                 onDayClick={(date) =>
-                  setDate((prev) => ({ ...prev, justDate: date }))
+                  setDate((prev: any) => ({ ...prev, justDate: date }))
                 }
                 className='rounded-md border'
               />

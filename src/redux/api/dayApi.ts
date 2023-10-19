@@ -11,9 +11,17 @@ export const dayApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      providesTags: [tagTypes.booking],
+      providesTags: [tagTypes.day],
+    }),
+    openingHoursUpdate: build.mutation({
+      query: (data) => ({
+        url: `/day/openingHours`,
+        method: "PATCH",
+        body: data.body,
+      }),
+      invalidatesTags: [tagTypes.day],
     }),
   }),
 });
 
-export const { useAlldaysQuery } = dayApi;
+export const { useAlldaysQuery, useOpeningHoursUpdateMutation } = dayApi;
