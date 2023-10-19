@@ -71,7 +71,7 @@ const HeroSection = () => {
           </div>
         </div>
         {/* info  */}
-        <div className='flex flex-col justify-center items-center w-full xl:max-w-[48%] h-[480px]'>
+        <div className='flex flex-col justify-center items-center w-full xl:max-w-[48%]'>
           {" "}
           <div>
             <Image width={500} height={500} src={"/car.png"} alt=''></Image>

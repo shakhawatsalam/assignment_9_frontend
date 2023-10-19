@@ -1,9 +1,14 @@
+"use client";
 import React from "react";
-import { MainNav } from "../ui/navBar";
+
 import { Avater } from "./Avater";
 import { ModeToggle } from "./ThemeToggleButton";
+import { isLoggedIn } from "@/service/auth.service";
+import MainNav from "../ui/navBar";
 
 const NavBar = () => {
+  const user = isLoggedIn();
+
   return (
     <div className='border-y-[1px] shadow-md dark:shadow-gray-700 dark:shadow-md'>
       <div className='container flex  justify-between items-center h-14'>
@@ -16,9 +21,11 @@ const NavBar = () => {
           <MainNav />
         </div>
         <div className='flex  w-24 justify-between items-center'>
-          <div>
-            <Avater />
-          </div>
+          {user && (
+            <div>
+              <Avater />
+            </div>
+          )}
           <div>
             <ModeToggle />
           </div>

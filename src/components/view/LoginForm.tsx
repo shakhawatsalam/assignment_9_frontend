@@ -28,7 +28,7 @@ import {
 } from "@/redux/api/userApi";
 import { useToast } from "@/components/ui/use-toast";
 
-// import { Icons } from "@/components/icons";
+import { Icons } from "@/components/icons";
 
 import {
   Card,
@@ -46,6 +46,7 @@ import { getUserInfo, storeUserInfo } from "@/service/auth.service";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { useDispatch } from "react-redux";
 import { logInUser } from "@/redux/features/user/userSlice";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   email: z.string({
@@ -78,9 +79,6 @@ const LoginForm = () => {
         router.push("/");
       }
       await storeUserInfo({ accessToken: res?.data });
-      const userInfo = await getUserInfo();
-      console.log(userInfo);
-      dispatch(logInUser(userInfo));
     } catch (error: any) {
       console.error(error.message);
     }
@@ -91,22 +89,36 @@ const LoginForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <Card>
             <CardHeader className='space-y-1'>
-              <CardTitle className='text-2xl'>Login</CardTitle>
+              <CardTitle className='text-2xl'>Create an account</CardTitle>
               <CardDescription>
                 Enter your email below to create your account
               </CardDescription>
             </CardHeader>
             <CardContent className='grid gap-4'>
-              {/* <div className='grid grid-cols-2 gap-6'>
-            <Button variant='outline'>
-              <Icons.gitHub className='mr-2 h-4 w-4' />
-              Github
-            </Button>
-            <Button variant='outline'>
-              <Icons.google className='mr-2 h-4 w-4' />
-              Google
-            </Button>
-          </div> */}
+              <div className='grid grid-cols-2 gap-6'>
+                <Button
+                  variant='outline'
+                  type='button'
+                  onClick={() =>
+                    signIn("github", {
+                      callbackUrl: "http://localhost:3000/",
+                    })
+                  }>
+                  <Icons.gitHub className='mr-2 h-4 w-4' />
+                  Github
+                </Button>
+                <Button
+                  variant='outline'
+                  type='button'
+                  onClick={() =>
+                    signIn("google", {
+                      callbackUrl: "http://localhost:3000/",
+                    })
+                  }>
+                  <Icons.google className='mr-2 h-4 w-4' />
+                  Google
+                </Button>
+              </div>
               <div className='relative'>
                 <div className='absolute inset-0 flex items-center'>
                   <span className='w-full border-t' />

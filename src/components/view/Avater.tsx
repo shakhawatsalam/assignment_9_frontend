@@ -11,8 +11,14 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { removeUserInFo } from "@/service/auth.service";
+import { authKey } from "@/constants/storageKey";
 
 export function Avater() {
+  const handleSignout = async () => {
+    await removeUserInFo(authKey);
+    location.reload();
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +48,7 @@ export function Avater() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleSignout()}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

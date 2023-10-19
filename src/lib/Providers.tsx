@@ -1,5 +1,5 @@
 "use client";
-
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";

@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { BaggageClaim, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 const ServiceCard = () => {
   return (
@@ -30,9 +31,11 @@ const ServiceCard = () => {
           <Button variant={"default"} size={"lg"}>
             <ShoppingCart />
           </Button>
-          <Button variant={"default"} size={"lg"}>
-            Details
-          </Button>
+          <Link href={`/service/${1}`}>
+            <Button variant={"default"} size={"lg"}>
+              Details
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>

@@ -47,9 +47,7 @@ const formSchema = z.object({
   firstName: z.string({
     required_error: "First Name is Required.",
   }),
-  lastName: z.string({
-    required_error: "Last Name is Required.",
-  }),
+
   email: z.string({
     required_error: "Email is Required.",
   }),
