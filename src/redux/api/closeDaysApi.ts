@@ -26,7 +26,7 @@ export const dayApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `/closedays`,
         method: "DELETE",
-        body: data.body,
+        body: data,
       }),
       invalidatesTags: [tagTypes.closedays],
     }),

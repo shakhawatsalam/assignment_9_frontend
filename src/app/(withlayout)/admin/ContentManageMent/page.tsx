@@ -1,22 +1,14 @@
 "use client";
+import TimeSelector from "@/components/TimeSelector";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import AdminCalender from "@/components/view/AdminCalender";
 import {
   useAlldaysQuery,
   useOpeningHoursUpdateMutation,
 } from "@/redux/api/dayApi";
-import React, { useEffect, useState } from "react";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
 import { capitalize, weekdayIndexToName } from "@/utils/helpers";
-import { formatISO } from "date-fns";
-import GetAllCloseDays from "@/components/GetAllCloseDays";
-import { Calendar } from "@/components/ui/calendar";
-import TimeSelector from "@/components/TimeSelector";
-import { DashIcon } from "@radix-ui/react-icons";
-import {
-  useAddCloseDaysMutation,
-  useDeleteClosedayMutation,
-  useDeleteServiceMutation,
-} from "@/redux/api/closeDaysApi";
+import { useEffect, useState } from "react";
 
 interface DayInfo {
   name: string;
@@ -26,15 +18,9 @@ interface DayInfo {
 [];
 const ContentManageMent = () => {
   const [openingHoursUpdate] = useOpeningHoursUpdateMutation();
-  const [addCloseDays] = useAddCloseDaysMutation();
-  const [deleteCloseday] = useDeleteClosedayMutation();
   const [enabled, setEnabled] = useState<boolean>(true);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
   const { data, isLoading } = useAlldaysQuery({});
   const [saveOpeningHrs, setSaveOpeningHrs] = useState<DayInfo[]>([]);
-  const [openDays, setOpenDays] = useState<Date | null>(null);
-  const [closeDays, setCloseDays] = useState<Date | null>(null);
   const days = data?.data;
 
   // Non-null-assertions because if days are less than 7, an error is thrown previously
@@ -101,24 +87,6 @@ const ContentManageMent = () => {
     }
   }, [days]);
 
-  const DatabaseclosedDays = GetAllCloseDays()?.data;
-
-  const closedDays: any[] = [];
-
-  const a = DatabaseclosedDays?.map((e: any) => {
-    closedDays.push(e.date);
-  });
-
-  const dayIsClosed =
-    selectedDate && closedDays?.includes(formatISO(selectedDate));
-  const Closedayssss = async () => {
-    if (dayIsClosed) {
-      deleteCloseday({ data: selectedDate });
-    } else {
-      addCloseDays({ data: selectedDate });
-    }
-  };
-
   // Curried for easier usage
   function _changeTime(day: any) {
     return function (time: string, type: "openTime" | "closeTime") {
@@ -130,10 +98,6 @@ const ContentManageMent = () => {
       setOpeningHrs(newOpeningHrs);
     };
   }
-  const dayClass = (date: any) => {
-    const isoDate = date.toISOString();
-    return closedDays?.includes(isoDate) ? true : false;
-  };
 
   return (
     <div className='mx-auto max-w-xl'>
@@ -200,35 +164,7 @@ const ContentManageMent = () => {
           </Button>
         </div>
       ) : (
-        // Opening days options
-        <div className='mt-6 flex flex-col items-center gap-6'>
-          <Calendar
-            mode='single'
-            // disabled={(date) => isDateClosed(date) || isDateInPast(date)}
-            onDayClick={(date) => {
-              setSelectedDate(date);
-            }}
-            modifiers={{
-              customClass: (date) => dayClass(date),
-            }}
-            className='rounded-md border'
-            modifiersStyles={{
-              customClass: {
-                color: "red", // You can customize the styles here
-              },
-            }}
-          />
-
-          <Button
-            onClick={() => {
-              if (dayIsClosed) setOpenDays({ date: selectedDate });
-              else if (selectedDate) setCloseDays({ date: selectedDate });
-              Closedayssss();
-            }}
-            disabled={!selectedDate}>
-            {dayIsClosed ? "Open shop this day" : "Close shop this day"}
-          </Button>
-        </div>
+        <AdminCalender />
       )}
     </div>
   );
