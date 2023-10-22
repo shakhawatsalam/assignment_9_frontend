@@ -86,86 +86,18 @@ const ContentManageMent = () => {
     }
   }, [days]);
 
-  // Curried for easier usage
-  function _changeTime(day: any) {
-    return function (time: string, type: "openTime" | "closeTime") {
-      const index = openingHrs.findIndex(
-        (x: any) => x.name === weekdayIndexToName(day.dayOfWeek)
-      );
-      const newOpeningHrs = [...openingHrs];
-      newOpeningHrs[index]![type] = time;
-      setOpeningHrs(newOpeningHrs);
-    };
-  }
-
   return (
     <div className='container p-9 border h-[70vh]'>
       <div className='mt-6 flex justify-center gap-6'>
         <p className={`${!enabled ? "font-medium" : ""}`}>Opening times</p>
         <Switch
-          // checked={enabled}
           onCheckedChange={() => setEnabled((prevEnabled) => !prevEnabled)}
         />
 
         <p className={`${enabled ? "font-medium" : ""}`}>Opening days</p>
       </div>
-      {/* hello world  */}
-      {!enabled ? (
-        // Opening times options
-        // <div className='my-12 flex flex-col gap-8'>
-        //   {days?.map((day: any) => {
-        //     const changeTime = _changeTime(day);
-        //     return (
-        //       <div className='grid grid-cols-3 place-items-center' key={day.id}>
-        //         <h3 className='font-semibold'>
-        //           {capitalize(weekdayIndexToName(day.dayOfWeek)!)}
-        //         </h3>
-        //         <div className='mx-4'>
-        //           <TimeSelector
-        //             type='openTime'
-        //             changeTime={changeTime}
-        //             selected={
-        //               openingHrs[
-        //                 openingHrs.findIndex(
-        //                   (x) => x.name === weekdayIndexToName(day.dayOfWeek)
-        //                 )
-        //               ]?.openTime
-        //             }
-        //           />
-        //         </div>
-        //         <div className='mx-4'>
-        //           <TimeSelector
-        //             type='closeTime'
-        //             changeTime={changeTime}
-        //             selected={
-        //               openingHrs[
-        //                 openingHrs.findIndex(
-        //                   (x) => x.name === weekdayIndexToName(day.dayOfWeek)
-        //                 )
-        //               ]?.closeTime
-        //             }
-        //           />
-        //         </div>
-        //       </div>
-        //     );
-        //   })}
 
-        //   <Button
-        //     onClick={() => {
-        //       const withId = openingHrs.map((day) => ({
-        //         ...day,
-        //         id: days[days.findIndex((d: any) => d.name === day.name)]!.id,
-        //       }));
-        //       setSaveOpeningHrs(withId);
-        //       updateSlot();
-        //     }}>
-        //     Save
-        //   </Button>
-        // </div>
-        <AdminTimeSlotCreate />
-      ) : (
-        <AdminCalender />
-      )}
+      {!enabled ? <AdminTimeSlotCreate /> : <AdminCalender />}
     </div>
   );
 };

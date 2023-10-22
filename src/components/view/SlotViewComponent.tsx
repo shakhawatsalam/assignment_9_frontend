@@ -10,12 +10,11 @@ const SlotViewComponent = ({ selectedDate }: any) => {
 
   const { data, isLoading } = useGetAllSlotsQuery(convertedDateTime || {});
   const slots = data && data?.data;
-  console.log(slots);
   return (
     <div className='grid grid-cols-4 align-middle content-center max-w-lg  gap-3  min-h-[0px]'>
       {slots?.map((slot: any, id: any) => (
         <>
-          <Button size={"sm"} key={id}>
+          <Button className='m-0' size={"sm"} key={id}>
             {slot.startTime}
           </Button>
         </>
